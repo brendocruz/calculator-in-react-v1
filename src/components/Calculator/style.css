@@ -1,0 +1,13 @@
+
+.buttons-grid {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 10px;
+
+	background: silver;
+	width: 450px;
+	margin: 50px auto;
+	padding: 10px;
+
+}
+
