@@ -1,14 +1,15 @@
-
 .button-double-size {
 	grid-row: span 2;
 }
 
 .button-container {
-	border: 1px solid black;
+	border: 1px solid white;
+	background: #888888;
 	font-size: 30px;
 
-	width: 75px;
-	min-height: 75px;
+	width: 70px;
+	min-height: 60px;
+	margin: 5px 2.5px;
 
 	display: flex;
 	justify-content: center;
@@ -21,4 +22,3 @@
 .button-container:active {
 	background: tomato;
 }
-

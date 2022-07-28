@@ -1,6 +1,7 @@
 
 export const globalState = {
-	operand1: '',
+	operand1: '127382',
 	operand2: '',
-	lastKey: ''
+	operator: "",
+	lastKey: "",
 }

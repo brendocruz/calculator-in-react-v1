@@ -1,9 +1,12 @@
-import './style.css';
-import { Calculator } from '../Calculator';
+import "./style.css";
+import { Calculator } from "../Calculator";
+import { AppContext } from "../../contexts/AppContext";
 
 function App() {
   return (
-	  <Calculator />
+	  <AppContext>
+		  <Calculator />
+	  </AppContext>
   );
 }
 
