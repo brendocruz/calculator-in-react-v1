@@ -3,6 +3,7 @@ import { Button } from "../Button";
 import { Display } from "../Display";
 
 export function Calculator() {
+
 	return (
 		<div className="calc-container">
 			<Display />

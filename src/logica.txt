@@ -1,0 +1,54 @@
+operando1, operando2, operador
+
+se operador == ""
+    se entrada == (NUMERO, SEPARADOR)
+        operando1 += entrada
+    senao entrada == ("+", "-", "/", "*")
+        operador = entrada
+    senao entrada == "="
+        # REFAZER ULTIMA OPERACAO
+        # SE NAO TIVER, NAO FAZ NADA
+        # SE FOR "M+" OU "M-", NAO FAZ NADA
+    senao entrada == "√"
+        operando1 = calcular(operador, operando1)
+        operador = ""
+    senao entrada == "%"
+        operando1 = 0
+        operador = ""
+    senao entrada == "M+"
+        memoria += entrada
+    senao entrada == "M-"
+        memoria -= entrada
+    senao entrada == "MRC"
+        operando1 = memoria
+        # MRC duas vezes
+caso contrario
+    se entrada == (NUMERO, SEPARADOR)
+        operando2 += entrada
+    senao entrada == ("+", "-", "/", "*")
+        operando1 = calcular(operador, operando1, operando2)
+        operando2 = ""
+        operador = entrada
+    senao entrada == "="
+        operando1 = calcular(operador, operando1, operando2)
+        operandor2 = ""
+        operador = ""
+    senao entrada == "√"
+        operando2 = calcular(entrada, operando2)
+    senao entrada == "%"
+        # COMPLICADO
+    senao entrada == "M+"
+        operando1 = calcular(operador, operando1, operando2)
+        memoria += operando1
+        operando2 = ""
+        operador = ""
+    senao entrada == "M-"
+        operando1 = calcular(operador, operando1, operando2)
+        memoria -= operando1
+        operando2 = ""
+        operador = ""
+    senao entrada == "MRC"
+        operando2 = memoria
+        # MRC duas vezes
+
+
