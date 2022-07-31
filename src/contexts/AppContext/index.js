@@ -52,9 +52,11 @@ const reducer = (state, action) => {
 			} else if (action.payload === "%") {
 				// DO SOMETHING
 			} else if (action.payload === "=") {
-				state.operand1 = calculate(state.lastOperator, state.operand1, state.lastOperand)
+				if (state.lastOperator !== "") {
+					state.operand1 = calculate(state.lastOperator, state.operand1, state.lastOperand);
+				}
 			} else {
-				state.operator = action.payload
+				state.operator = action.payload;
 			}
 		} else if (action.type === "function") {
 			if (action.payload === "M+")
@@ -65,7 +67,7 @@ const reducer = (state, action) => {
 				state.operand1 = state.memory
 		}
 
-	} else {
+	} else { // if state.operator is not an empty string
 
 		if (action.type === "number")
 			state.operand2 += action.payload
@@ -75,9 +77,19 @@ const reducer = (state, action) => {
 			if (action.payload === "√") {
 				state.operand2 = calculate(action.payload, state.operand2)
 			} else if (action.payload === "=") {
+				if (state.operator === "×") {
+					// save *x
+					state.lastOperand = state.operand1;
+					state.lastOperator = state.operator;
+				} else {
+					// save +y, -y, /y
+					state.lastOperand = state.operand2;
+					state.lastOperator = state.operator;
+				}
+				// calculate
 				state.operand1 = calculate(state.operator, state.operand1, state.operand2);
-				state.lastOperand = state.operand2;
-				state.lastOperator = state.operator;
+
+				// clean
 				state.operand2 = "";
 				state.operator = "";
 			} else if (action.payload === "%") {
@@ -96,9 +108,11 @@ const reducer = (state, action) => {
 					state.operator = "";
 				}
 			} else {
-				state.operand1 = calculate(state.operator, state.operand1, state.operand2);
-				state.operand2 = "";
-				state.operator = action.payload;
+				if (state.operand2 !== "") {
+					state.operand1 = calculate(state.operator, state.operand1, state.operand2);
+					state.operand2 = "";
+					state.operator = action.payload;
+				}
 			}
 		} else if (action.type === "function") {
 			if (action.payload === "M+") {

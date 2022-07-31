@@ -4,5 +4,6 @@ export const globalState = {
 	operand2: "",
 	operator: "",
 	memory: 0,
-	lastKey: "",
+	lastOperator: "",
+	lastOperand: "",
 }
