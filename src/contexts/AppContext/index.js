@@ -50,7 +50,7 @@ const reducer = (state, action) => {
 			if (action.payload === "√") {
 				state.operand1 = calculate(action.payload, state.operand1)
 			} else if (action.payload === "%") {
-				// DO SOMETHING
+				state.operand1 = "0";
 			} else if (action.payload === "=") {
 				if (state.lastOperator !== "") {
 					state.operand1 = calculate(state.lastOperator, state.operand1, state.lastOperand);
