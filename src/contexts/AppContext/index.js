@@ -16,7 +16,17 @@ const calculate =(operator, operand1, operand2, operator2) => {
 		result = String(Number(operand1) / Number(operand2));
 	else if (operator === "√")
 		result = String(Math.sqrt(Number(operand1)));
-	else if (operator === "%")
+	else if (operator === "%") {
+		if (operator2 === "+") {
+			result = String(Number(operand1) + (Number(operand1) * (Number(operand2) / 100)));
+		} else if (operator2 === "-") {
+			result = String(Number(operand1) - (Number(operand1) * (Number(operand2) / 100)));
+		} else if (operator2 === "×") {
+			result = String(Number(operand1) * (Number(operand2) / 100));
+		} else if (operator2 === "÷") {
+			result = String((Number(operand1) / Number(operand2)) * 100)
+		}
+	}
 
 	return result;
 }
@@ -65,15 +75,30 @@ const reducer = (state, action) => {
 			if (action.payload === "√") {
 				state.operand2 = calculate(action.payload, state.operand2)
 			} else if (action.payload === "=") {
-				state.operand1 = calculate(state.operator, state.operand1, state.operand2)
-				state.lastOperand = state.operand2
-				state.lastOperator = state.operator
-				state.operand2 = ""
-				state.operator = ""
+				state.operand1 = calculate(state.operator, state.operand1, state.operand2);
+				state.lastOperand = state.operand2;
+				state.lastOperator = state.operator;
+				state.operand2 = "";
+				state.operator = "";
+			} else if (action.payload === "%") {
+				if (state.operator === "÷") {
+					state.operand1 = calculate(action.payload, state.operand1, state.operand2, state.operator);
+					state.lastOperand = state.operand2;
+					state.lastOperator = state.operator;
+					state.operand2 = "";
+					state.operator = "";
+
+				} else {
+					state.lastOperand = state.operand1;
+					state.operand1 = calculate(action.payload, state.operand1, state.operand2, state.operator);
+					state.lastOperator = state.operator;
+					state.operand2 = "";
+					state.operator = "";
+				}
 			} else {
-				state.operand1 = calculate(state.operator, state.operand1, state.operand2)
-				state.operand2 = ""
-				state.operator = action.payload
+				state.operand1 = calculate(state.operator, state.operand1, state.operand2);
+				state.operand2 = "";
+				state.operator = action.payload;
 			}
 		} else if (action.type === "function") {
 			if (action.payload === "M+") {
