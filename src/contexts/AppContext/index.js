@@ -37,6 +37,8 @@ const reducer = (state, action) => {
 		state.operand1 = "0";
 		state.operand2 = "";
 		state.operator = "";
+		state.lastOperator = "";
+		state.lastOperand = "";
 	} else if (state.operator === "") {
 		if (action.type === "number") {
 			if (state.operand1 === "0") {
