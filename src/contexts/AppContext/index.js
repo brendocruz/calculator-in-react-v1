@@ -52,7 +52,9 @@ const reducer = (state, action) => {
 			if (action.payload === "√") {
 				state.operand1 = calculate(action.payload, state.operand1)
 			} else if (action.payload === "%") {
-				state.operand1 = "0";
+				if (state.lastOperator === "") {
+					state.operand1 = "0";
+				}
 			} else if (action.payload === "=") {
 				if (state.lastOperator !== "") {
 					state.operand1 = calculate(state.lastOperator, state.operand1, state.lastOperand);
@@ -65,8 +67,14 @@ const reducer = (state, action) => {
 				state.memory += Number(state.operand1)
 			else if (action.payload === "M-")
 				state.memory -= Number(state.operand1)
-			else if (action.payload === "MRC")
-				state.operand1 = state.memory
+			else if (action.payload === "MRC") {
+				state.operand1 = state.memory;
+				if (state.lastOperator === "MRC") {
+					state.memory = 0;
+					state.lastOperator = "";
+				}
+				state.lastOperator = "MRC";
+			}
 		}
 
 	} else { // if state.operator is not an empty string
@@ -102,6 +110,12 @@ const reducer = (state, action) => {
 					state.operand2 = "";
 					state.operator = "";
 
+				} else if (state.operator === "×") {
+					state.lastOperand = String(Number(state.operand1) / 100);
+					state.operand1 = calculate(action.payload, state.operand1, state.operand2, state.operator);
+					state.lastOperator = state.operator;
+					state.operand2 = "";
+					state.operator = "";
 				} else {
 					state.lastOperand = state.operand1;
 					state.operand1 = calculate(action.payload, state.operand1, state.operand2, state.operator);
